@@ -6,7 +6,7 @@
 /*   By: ilahyani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 21:03:02 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/02 23:56:09 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/03 01:52:00 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,11 @@ int	isSorted(t_list *a)
 int	main(int argc, char **argv)
 {
 	int		i;
-	void	*x;
 	t_list *a;
 
 	i = 1;
 	while (i < argc)
-	{
-		x = (void *)ft_atoi(argv[i++]);
-		ft_lstadd_back(&a, ft_lstnew(x));
-	}
+		ft_lstadd_back(&a, ft_lstnew(ft_atoi(argv[i++])));
 	if (isSorted(a))
 		ft_printf("sorted\n");
 	else
