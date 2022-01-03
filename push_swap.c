@@ -19,10 +19,7 @@ int	isSorted(t_list *a)
 
 	tmp = a;
 	while (tmp->next && tmp->content < tmp->next->content)
-	{
-		printf("%d < %d\n", tmp->content, tmp->next->content);
 		tmp = tmp->next;
-	}
 	if(!(tmp->next))
 		return (1);
 	return (0);
