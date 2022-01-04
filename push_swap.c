@@ -19,23 +19,33 @@ int	isSorted(t_list *a)
 
 	tmp = a;
 	while (tmp->next && tmp->content < tmp->next->content)
+	{
+		ft_printf("here\n");
 		tmp = tmp->next;
-	if(!(tmp->next))
-		return (1);
-	return (0);
+	}
+	if(tmp->next)
+		return (0);
+	return (1);
 }
 
 int	main(int argc, char **argv)
 {
-	int		i;
+	int	i;
 	t_list *a;
+	int	x;
 
 	i = 1;
+	a = NULL;
+	if (argc == 1)
+		return (0);
 	while (i < argc)
-		ft_lstadd_back(&a, ft_lstnew(ft_atoi(argv[i++])));
-	if (isSorted(a))
-		ft_printf("sorted\n");
-	else
+	{
+		x = ft_atoi(argv[i++]);
+		ft_lstadd_back(&a, ft_lstnew(&x));
+	}
+	if (!isSorted(a))
 		ft_printf("sortedn't\n");
+	else
+		ft_printf("sorted\n");
 	return (0);
 }
