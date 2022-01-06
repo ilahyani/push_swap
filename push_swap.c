@@ -6,7 +6,7 @@
 /*   By: ilahyani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 21:03:02 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/06 11:02:29 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/06 11:04:31 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,9 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	else if (argc == 4)
-	{
 		sort_three(A);
-		free(A);
-		return (0);
-	}
 	else if (argc == 6)
-	{
 		sort_five(A);
-		free(A);
-		return (0);
-	}
+	free(A);
 	return (0);
 }
