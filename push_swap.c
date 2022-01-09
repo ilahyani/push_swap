@@ -13,14 +13,37 @@
 #include "libft/libft.h"
 #include <stdio.h> 
 
+//This gotta be on a different file
+
+void	sa(int *A)
+{
+	int	tmp;
+
+	tmp = A[0];
+	A[0] = A[1];
+	A[1] = tmp;
+}
+
+void	sb(int *B)
+{
+	int	tmp;
+
+	tmp = B[0];
+	B[0] = B[1];
+	B[1] = tmp;
+}
+
+
+//all the way down here
+
 int	isSorted(int *A, int c)
 {
 	int	i;
 	
 	i = 0;
-	while (i < c - 2 && A[i] <= A[i + 1])
+	while (i < c && A[i] <= A[i + 1])
 		i++;
-	if (i == c - 2)
+	if (i == c)
 		return (1);
 	return (0);
 }
@@ -28,53 +51,80 @@ int	isSorted(int *A, int c)
 void	sort_three(int *A)
 {
 	if (A[0] > A[1] && A[0] < A[2])
-			ft_printf("ra\n");
+		//ra;
 	else if (A[1] > A[0] && A[1] > A[2])
 	{
 		if (A[0] < A[2])
-			ft_printf("rra\nsa\n");
+			//rra
+			//sa
 		else
-			ft_printf("rra");
+			//rra
 	}
 	else if (A[0] > A[1] && A[0] > A[2])
 	{
 		if (A[1] > A[2])
-			ft_printf("sa\nrra\n");
+			//sa
+			//rra
 		else
-			ft_printf("ra\n");
+			//ra
 	}
-}
-void	sort_five(int *A)
+}	
+
+void	smallest_to_top(int *A, int count)
 {
-	ft_printf("pb\npb\n");
-	sort_three(A + 2);
+	int	i;
+	int	idx;
+
+	i = 1;
+	idx = 0;
+	while (i < count)
+	{
+		if (A[idx] > A[i])
+			idx = i;
+		i++;
+	}
+	ft_printf("A[%d] = %d\n", idx, A[idx]);
+	if (idx > count / 2)	
+		while (idx++ <= count)
+			// rra(idx, count, A, B);
+	else			
+		while (idx-- > 0)
+			// ra(idx, count, A, B);
+}
+
+void	dozen_sort(int *A, int count)
+{
+	while (count > 0)
+	{
+		smallest_to_top(A, count--);
+		//pb(idx, A, B);
+	}
 }
 
 int	main(int argc, char **argv)
 {
 	int	i;
-	int	*A = NULL;
+	int	*A;	//was initialized with NULL
+	int	*B;
 
-	i = 1;
 	if (argc == 1)
 		return (0);
 	A = malloc (sizeof(int) * argc - 1);
+	B = malloc (sizeof(int) * argc - 1);
 	if (!A)
 		return (0);
-	while (i < argc)
-	{
-		A[i - 1] = ft_atoi(argv[i]);
-		i++;
-	}
-	if (isSorted(A, argc))
+	i = argc - 2;
+	while (i <= 0)
+		A[i] = ft_atoi(argv[i--]);	//Need an error msg if the input ain't int
+	if (isSorted(A, argc - 2))
 	{
 		free(A);
 		return (0);
 	}
 	else if (argc == 4)
 		sort_three(A);
-	else if (argc == 6)
-		sort_five(A);
+	else if (argc >=  10)
+		dozen_sort(A, argc - 2);
 	free(A);
 	return (0);
 }
