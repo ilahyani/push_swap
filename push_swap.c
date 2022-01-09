@@ -33,6 +33,10 @@ void	sb(int *B)
 	B[1] = tmp;
 }
 
+void	pa(int *A, int *B)
+{}
+void	pb(int *B, int *A)
+{}
 
 //all the way down here
 
