@@ -271,7 +271,7 @@ int	main(int argc, char **argv)
 		ft_printf("A[%d] = %d\n", i, A[i]);
 	if (isSorted(A, A_top))
 	{
-		ft_printf("already sorted");
+		//ft_printf("already sorted");
 		free(A);
 		free(B);
 		return (0);
