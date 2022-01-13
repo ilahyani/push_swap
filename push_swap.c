@@ -132,6 +132,23 @@ void	rrr(int *A, int *B, int A_top, int B_top)
 	ft_printf("rrr\n");
 }
 
+int	find_smallest(int *stack, int *top)
+{
+	int	i;
+	int	idx;
+	// int	j;
+
+	i = 0;
+	idx = 1;
+	while (i <= *top)
+	{
+		if (stack[idx] > stack[i])
+			idx = i;
+		i++;
+	}
+	return (idx);
+}
+
 int	isSorted(int *A, int A_top)
 {
 	while (A_top > 0 && A[A_top] <= A[A_top - 1])
@@ -141,7 +158,7 @@ int	isSorted(int *A, int A_top)
 	return (0);
 }
 
-void	sort_three(int *A, int A_top)
+void	three_sort(int *A, int A_top)
 {
 	if (A[0] >= A[1] && A[0] >= A[2])
 		sa(A, A_top);
@@ -169,17 +186,9 @@ void	sort_three(int *A, int A_top)
 
 void	smallest_to_top(int *A, int *A_top)
 {
-	int	i;
 	int	idx;
 
-	i = 0;
-	idx = 1;
-	while (i <= *A_top)
-	{
-		if (A[idx] > A[i])
-			idx = i;
-		i++;
-	}
+	idx = find_smallest(A, A_top);
 	if (idx == *A_top)
 		return ;
 	if (idx < (*A_top) / 2)
@@ -200,7 +209,7 @@ void	smallest_to_top(int *A, int *A_top)
 	}
 }
 
-void	dozen_sort(int *A, int *A_top, int *B, int *B_top)
+void	ten_sort(int *A, int *A_top, int *B, int *B_top)
 {
 	int	count;
 	int	i;
@@ -211,38 +220,56 @@ void	dozen_sort(int *A, int *A_top, int *B, int *B_top)
 	{
 		if (isSorted(A, *A_top))
 			break ;
-		//printf("B4 smallest to top -------------------------------------\n");
-		//for (int k = *A_top; k >= 0; k--)
-		//	ft_printf("A[%d] = %d | ", k, A[k]);
-		//printf("\n");
 		smallest_to_top(A, A_top);
-		// printf("A_top before pb -> %d\n", *A_top);
-		// printf("B_top before pb -> %d\n", *B_top);
-		//printf("after smallest to top-----------------------------------\n");
-		//for (int k = *A_top; k >= 0; k--)
-		//	ft_printf("A[%d] = %d | ", k, A[k]);
-		//printf("\n");
 		pb(A, B, B_top, A_top);
-		//printf("after pb------------------------------------------------\n");
-		//for (int b = *B_top; b >= 0; b--)
-		//	ft_printf("B[%d] = %d | ", b, B[b]);
-		//printf("\n");
-		//printf("--------------------------------------------------------\n");
-		// printf("A_top after pb  -> %d\n", *A_top);
-		// printf("B_top after pb  -> %d\n", *B_top);
 		count--;
 	}
 	if (!isSorted(A, *A_top))
-		sort_three(A, *A_top);
+		three_sort(A, *A_top);
 	while (count < i)
 	{
-		// printf("A_top before pa -> %d\n", *A_top);
-		// printf("B_top before pa -> %d\n", *B_top);
 		pa(A, B, B_top, A_top);
-		// printf("A_top after pa  -> %d\n", *A_top);
-		// printf("B_top after pa  -> %d\n", *B_top);
 		count++;
 	}
+}
+
+int	find_keynbr(int *A, int A_top)
+{
+	int *C;
+	int	tmp;
+	int	i;
+	int x;
+
+	C = malloc(sizeof(int) * (A_top + 1));
+	if (!C)
+		return (0);
+	i = 0;
+	while (i <= A_top)
+	{
+		C[i] = A[i];
+		i++;
+	}
+	i--;
+	while (i > 0)
+	{
+		x = find_smallest(C, &i);
+		tmp = C[i];
+		C[i] = C[x];
+		C[x] = tmp;
+		i--;
+	}
+	ft_printf("    * Sorted C\n");
+	for (int j = A_top; j >= 0; j--)
+		ft_printf("C[%d] = %d\n", j, C[j]);
+	return (C[A_top / 4]);
+}
+
+void	dozen_sort(int *A, int A_top)
+{
+	int key_nbr;
+	
+	key_nbr = find_keynbr(A, A_top);
+	ft_printf("    * key number = %d\n", key_nbr);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -259,29 +286,31 @@ int	main(int argc, char **argv)
 		return (0);
 	A = malloc (sizeof(int) * argc - 1);
 	B = malloc (sizeof(int) * argc - 1);
-	if (!A)
+	if (!A || !B)
 		return (0);
 	A_top = argc - 2;
 	B_top = -1;
 	argc -= 1;
 	i = 0;
 	while (i <= A_top)
-		A[i++] = ft_atoi(argv[argc--]);	//Need an error msg if input ain't int
+		A[i++] = ft_atoi(argv[argc--]);		//Need an error msg if input ain't int
+	ft_printf("------------ unsorted A --------------\n");
 	for (i = A_top; i >= 0; i--)
 		ft_printf("A[%d] = %d\n", i, A[i]);
+	ft_printf("------------ sorting A ---------------\n");
 	if (isSorted(A, A_top))
 	{
-		//ft_printf("already sorted");
 		free(A);
 		free(B);
 		return (0);
 	}
-	else if (argc == 4)
-		sort_three(A, A_top);
-	else if (argc <  12)
-		dozen_sort(A, &A_top, B, &B_top);
-	// ft_printf("[%d]\n", A_top);
-	// ft_printf("[%d]\n", B_top);
+	if (A_top == 2)
+		three_sort(A, A_top);
+	else if (A_top > 2 && A_top <  10)
+		ten_sort(A, &A_top, B, &B_top);
+	else if (A_top >= 10 && A_top <= 100)
+		dozen_sort(A, A_top);
+	ft_printf("------------ sorted A ----------------\n");
 	for (i = A_top; i >= 0; i--)
 		ft_printf("A[%d] = %d\n", i, A[i]);
 	free(A);
