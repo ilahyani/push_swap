@@ -136,7 +136,6 @@ int	find_smallest(int *stack, int *top)
 {
 	int	i;
 	int	idx;
-	// int	j;
 
 	i = 0;
 	idx = 1;
@@ -160,7 +159,9 @@ int	isSorted(int *A, int A_top)
 
 void	three_sort(int *A, int A_top)
 {
-	if (A[0] >= A[1] && A[0] >= A[2])
+	if (A_top == 1 && A[1] > A[0])
+		sa(A, A_top); 
+	else if (A[0] >= A[1] && A[0] >= A[2])
 		sa(A, A_top);
 	else if (A[1] >= A[0] && A[1] >= A[2])
 	{
@@ -233,14 +234,57 @@ void	ten_sort(int *A, int *A_top, int *B, int *B_top)
 	}
 }
 
-int	find_keynbr(int *A, int A_top)
+int	find_biggest(int *stack, int *top)
+{
+	int	i;
+	int	idx;
+
+	i = 0;
+	idx = 1;
+	while (i <= *top)
+	{
+		if (stack[idx] < stack[i])
+			idx = i;
+		i++;
+	}
+	return (idx);
+}
+
+void	biggest_to_top(int *A, int *A_top)
+{
+	int	idx;
+
+	idx = find_biggest(A, A_top);
+	if (idx == *A_top)
+		return ;
+	if (idx < (*A_top) / 2)
+	{
+		while (idx >= 0)
+		{
+			rra(A, *A_top);
+			idx--;
+		}
+	}
+	else
+	{	
+		while (idx < *A_top)
+		{
+			ra(A, *A_top);
+			idx++;
+		}
+	}
+}
+
+int	*find_keynbr(int *A, int A_top)
 {
 	int *C;
 	int	tmp;
 	int	i;
 	int x;
+	int *ret;
 
 	C = malloc(sizeof(int) * (A_top + 1));
+	ret = malloc(sizeof(int) * 4);
 	if (!C)
 		return (0);
 	i = 0;
@@ -258,18 +302,84 @@ int	find_keynbr(int *A, int A_top)
 		C[x] = tmp;
 		i--;
 	}
-	ft_printf("    * Sorted C\n");
-	for (int j = A_top; j >= 0; j--)
-		ft_printf("C[%d] = %d\n", j, C[j]);
-	return (C[A_top / 4]);
+	i = 1;
+	while (i < 5)
+	{
+		ret[i] = C[A_top - (A_top/4) * i];
+		i++;
+	}
+	// ft_printf("    * Sorted C\n");
+	// for (int j = A_top; j >= 0; j--)
+	// 	ft_printf("C[%d] = %d\n", j, C[j]);
+	free (C);
+	return (ret);
 }
 
-void	dozen_sort(int *A, int A_top)
+void	dozen_sort(int *A, int *B, int *A_top, int *B_top)
 {
-	int key_nbr;
+	int *key_nbr;
+	int	i;
+	int	j;
+	int	k;
 	
-	key_nbr = find_keynbr(A, A_top);
-	ft_printf("    * key number = %d\n", key_nbr);
+	key_nbr = find_keynbr(A, *A_top);
+		
+	k = 1;
+	while (k < 5)
+	{
+		i = *A_top;
+		// ft_printf("    * key_nbr[%d] = %d\n", k, key_nbr[k]);
+		while (i >= 0)
+		{
+			j = i;
+			if (A[j] <= key_nbr[k])
+			{
+				if (j == *A_top)
+					pb(A, B, B_top, A_top);
+				else if (j < (*A_top) / 2)
+				{
+					while (j >= 0)
+					{
+						rra(A, *A_top);
+						j--;
+					}
+					pb(A, B, B_top, A_top);
+				}
+				else
+				{
+					while (j < *A_top)
+					{
+						ra(A, *A_top);
+						j++;
+					}
+					pb(A, B, B_top, A_top);
+				}
+				i = (*A_top) + 1;
+			}
+			i--;
+		}
+		// ft_printf("    * Stack B\n");
+		// for (int z = *B_top; z >= 0; z--)
+		// 	ft_printf("B[%d] = %d\n", z, B[z]);
+		k++;
+	}
+	// ft_printf("    * Stack A\n");
+	// 	for (int z = *A_top; z >= 0; z--)
+	// 		ft_printf("A[%d] = %d\n", z, A[z]);
+	free(key_nbr);
+	ten_sort(A, A_top, B, B_top);
+
+	int	count;
+	int	z;
+
+	count = *B_top + 1;
+	z = count;
+	while (count > 0)
+	{
+		biggest_to_top(B, B_top);
+		pa(A, B, B_top, A_top);
+		count--;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -294,10 +404,10 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i <= A_top)
 		A[i++] = ft_atoi(argv[argc--]);		//Need an error msg if input ain't int
-	ft_printf("------------ unsorted A --------------\n");
-	for (i = A_top; i >= 0; i--)
-		ft_printf("A[%d] = %d\n", i, A[i]);
-	ft_printf("------------ sorting A ---------------\n");
+	// ft_printf("------------ unsorted A --------------\n");
+	// for (i = A_top; i >= 0; i--)
+	// 	ft_printf("A[%d] = %d\n", i, A[i]);
+	// ft_printf("------------ sorting A ---------------\n");
 	if (isSorted(A, A_top))
 	{
 		free(A);
@@ -309,11 +419,11 @@ int	main(int argc, char **argv)
 	else if (A_top > 2 && A_top <  10)
 		ten_sort(A, &A_top, B, &B_top);
 	else if (A_top >= 10 && A_top <= 100)
-		dozen_sort(A, A_top);
-	ft_printf("------------ sorted A ----------------\n");
-	for (i = A_top; i >= 0; i--)
-		ft_printf("A[%d] = %d\n", i, A[i]);
-	free(A);
+		dozen_sort(A, B, &A_top, &B_top);
+	// ft_printf("------------ sorted A ----------------\n");
+	// for (i = A_top; i >= 0; i--)
+	// 	ft_printf("A[%d] = %d\n", i, A[i]);
 	free(B);
+	free(A);
 	return (0);
 }
