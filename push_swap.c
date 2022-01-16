@@ -12,14 +12,6 @@
 
 #include "push_swap.h"
 
-void	ft_free(int *A, int *B)
-{
-	free(A);
-	A = NULL;
-	free(B);
-	B = NULL;
-}
-
 int	isSorted(int *A, int A_top)
 {
 	while (A_top > 0 && A[A_top] <= A[A_top - 1])
@@ -27,6 +19,16 @@ int	isSorted(int *A, int A_top)
 	if (!A_top)
 		return (1);
 	return (0);
+}
+
+void	sort_A(int *A, int A_top, int *B, int B_top)
+{
+	if (A_top == 2)
+		three_sort(A, A_top);
+	else if (A_top > 2 && A_top <  10)
+		ten_sort(A, &A_top, B, &B_top);
+	else if (A_top >= 10 && A_top <= 100)
+		dozen_sort(A, B, &A_top, &B_top);
 }
 
 int	main(int argc, char **argv)
@@ -53,19 +55,13 @@ int	main(int argc, char **argv)
 	// for (i = A_top; i >= 0; i--)
 	// 	ft_printf("A[%d] = %d\n", i, A[i]);
 	// ft_printf("------------ sorting A ---------------\n");
-	if (isSorted(A, A_top))
-		ft_free(A, B);
-	else if (A_top == 2)
-		three_sort(A, A_top);
-	else if (A_top > 2 && A_top <  10)
-		ten_sort(A, &A_top, B, &B_top);
-	else if (A_top >= 10 && A_top <= 100)
-		dozen_sort(A, B, &A_top, &B_top);
+	if (!isSorted(A, A_top))
+		sort_A(A, A_top, B, B_top);
 	// ft_printf("------------ sorted A ----------------\n");
 	// for (i = A_top; i >= 0; i--)
 	// 	ft_printf("A[%d] = %d\n", i, A[i]);
 	if (isSorted(A, A_top))
-		ft_printf("-----> OK\n");
-	ft_free(A, B);
+		ft_printf("-----> OK <-----\n");
+	free(B);
 	return (0);
 }

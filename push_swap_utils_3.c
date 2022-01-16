@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap_utils_3.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ilahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/16 20:09:58 by ilahyani          #+#    #+#             */
+/*   Updated: 2022/01/16 20:10:00 by ilahyani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	find_biggest(int *stack, int *top)
@@ -41,95 +53,76 @@ void	biggest_to_top(int *B, int *B_top)
 	}
 }
 
+void	sort_copy(int *C, int top)
+{
+	int	x;
+	int	tmp;
+
+	while (top > 0)
+	{
+		x = find_smallest(C, &top);
+		tmp = C[top];
+		C[top] = C[x];
+		C[x] = tmp;
+		top--;
+	}
+}
+
 int	*find_keynbr(int *A, int A_top)
 {
 	int *C;
-	int	tmp;
 	int	i;
-	int x;
 	int *ret;
 
 	C = malloc(sizeof(int) * (A_top + 1));
 	ret = malloc(sizeof(int) * 4);
-	if (!C)
-		return (0);
+	if (!C || !ret)
+		return (0);								//what then?
 	i = 0;
 	while (i <= A_top)
 	{
 		C[i] = A[i];
 		i++;
 	}
-	i--;
-	while (i > 0)
-	{
-		x = find_smallest(C, &i);
-		tmp = C[i];
-		C[i] = C[x];
-		C[x] = tmp;
-		i--;
-	}
+	sort_copy(C, A_top);
 	i = 1;
 	while (i < 5)
 	{
 		ret[i] = C[A_top - (A_top/4) * i];
 		i++;
 	}
-	// ft_printf("    * Sorted C\n");
-	// for (int j = A_top; j >= 0; j--)
-	// 	ft_printf("C[%d] = %d\n", j, C[j]);
 	free (C);
 	return (ret);
 }
 
-void	dozen_sort(int *A, int *B, int *A_top, int *B_top)
+void	push_to_b(int *A, int *A_top, int *B, int *B_top, int j)
 {
-	int *key_nbr;
-	int	count;
-	int	i;
-	int	j;
-	int	k;
-	
-	key_nbr = find_keynbr(A, *A_top);
-	k = 1;
-	while (k < 5)
+	if (j == *A_top)
+		pb(A, B, B_top, A_top);
+	else if (j < (*A_top) / 2)
 	{
-		i = *A_top;
-		// ft_printf("    * key_nbr[%d] = %d\n", k, key_nbr[k]);
-		while (i >= 0)
+		while (j >= 0)
 		{
-			j = i; 
-			if (A[j] <= key_nbr[k])
-			{
-				if (j == *A_top)
-					pb(A, B, B_top, A_top);
-				else if (j < (*A_top) / 2)
-				{
-					while (j >= 0)
-					{
-						rra(A, *A_top);
-						j--;
-					}
-					pb(A, B, B_top, A_top);
-				}
-				else
-				{
-					while (j < *A_top)
-					{
-						ra(A, *A_top);
-						j++;
-					}
-					pb(A, B, B_top, A_top);
-				}
-				i = (*A_top) + 1;
-			}
-			i--;
+			rra(A, *A_top);
+			j--;
 		}
-		// ft_printf("    * Stack B\n");
-		// for (int z = *B_top; z >= 0; z--)
-		// 	ft_printf("B[%d] = %d\n", z, B[z]);
-		k++;
+		pb(A, B, B_top, A_top);
 	}
-	free(key_nbr);
+	else
+	{
+		while (j < *A_top)
+		{
+			ra(A, *A_top);
+			j++;
+		}
+		pb(A, B, B_top, A_top);
+	}
+}
+
+void	push_to_a(int *A, int *A_top, int *B, int *B_top)
+{
+	int	count;
+
 	if (!isSorted(A, *A_top))
 	{
 		if (*A_top > 2)
@@ -144,4 +137,32 @@ void	dozen_sort(int *A, int *B, int *A_top, int *B_top)
 		pa(A, B, B_top, A_top);
 		count--;
 	}
+}
+
+void	dozen_sort(int *A, int *B, int *A_top, int *B_top)
+{
+	int *key_nbr;
+	int	i;
+	int	j;
+	int	k;
+	
+	key_nbr = find_keynbr(A, *A_top);
+	k = 1;
+	while (k < 5)
+	{
+		i = *A_top;
+		while (i >= 0)
+		{
+			j = i; 
+			if (A[j] <= key_nbr[k])
+			{
+				push_to_b(A, A_top, B, B_top,j);	
+				i = (*A_top) + 1;
+			}
+			i--;
+		}
+		k++;
+	}
+	free(key_nbr);
+	push_to_a(A, A_top, B, B_top);
 }
