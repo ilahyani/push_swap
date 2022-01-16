@@ -250,26 +250,26 @@ int	find_biggest(int *stack, int *top)
 	return (idx);
 }
 
-void	biggest_to_top(int *A, int *A_top)
+void	biggest_to_top(int *B, int *B_top)
 {
 	int	idx;
 
-	idx = find_biggest(A, A_top);
-	if (idx == *A_top)
+	idx = find_biggest(B, B_top);
+	if (idx == *B_top)
 		return ;
-	if (idx < (*A_top) / 2)
+	if (idx < (*B_top) / 2)
 	{
 		while (idx >= 0)
 		{
-			rra(A, *A_top);
+			rrb(B, *B_top);
 			idx--;
 		}
 	}
 	else
 	{	
-		while (idx < *A_top)
+		while (idx < *B_top)
 		{
-			ra(A, *A_top);
+			rb(B, *B_top);
 			idx++;
 		}
 	}
@@ -318,12 +318,12 @@ int	*find_keynbr(int *A, int A_top)
 void	dozen_sort(int *A, int *B, int *A_top, int *B_top)
 {
 	int *key_nbr;
+	int	count;
 	int	i;
 	int	j;
 	int	k;
 	
 	key_nbr = find_keynbr(A, *A_top);
-		
 	k = 1;
 	while (k < 5)
 	{
@@ -363,17 +363,15 @@ void	dozen_sort(int *A, int *B, int *A_top, int *B_top)
 		// 	ft_printf("B[%d] = %d\n", z, B[z]);
 		k++;
 	}
-	// ft_printf("    * Stack A\n");
-	// 	for (int z = *A_top; z >= 0; z--)
-	// 		ft_printf("A[%d] = %d\n", z, A[z]);
 	free(key_nbr);
-	ten_sort(A, A_top, B, B_top);
-
-	int	count;
-	int	z;
-
+	if (!isSorted(A, *A_top))
+	{
+		if (*A_top > 2)
+			ten_sort(A, A_top, B, B_top);
+		else
+			three_sort(A, *A_top);
+	}
 	count = *B_top + 1;
-	z = count;
 	while (count > 0)
 	{
 		biggest_to_top(B, B_top);
@@ -400,10 +398,10 @@ int	main(int argc, char **argv)
 		return (0);
 	A_top = argc - 2;
 	B_top = -1;
-	argc -= 1;
+	argc--;
 	i = 0;
 	while (i <= A_top)
-		A[i++] = ft_atoi(argv[argc--]);		//Need an error msg if input ain't int
+		A[i++] = ft_atoi(argv[argc--]);		// Need an error msg if input ain't int!!
 	// ft_printf("------------ unsorted A --------------\n");
 	// for (i = A_top; i >= 0; i--)
 	// 	ft_printf("A[%d] = %d\n", i, A[i]);
@@ -423,6 +421,8 @@ int	main(int argc, char **argv)
 	// ft_printf("------------ sorted A ----------------\n");
 	// for (i = A_top; i >= 0; i--)
 	// 	ft_printf("A[%d] = %d\n", i, A[i]);
+	if (isSorted(A, A_top))
+		ft_printf("-----> OK\n");
 	free(B);
 	free(A);
 	return (0);
