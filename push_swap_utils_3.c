@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_utils_3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 20:09:58 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/16 20:10:00 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/17 17:30:49 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	find_biggest(int *stack, int *top)
+int	find_smallest(int *stack, int *top)
 {
 	int	i;
 	int	idx;
@@ -21,148 +21,82 @@ int	find_biggest(int *stack, int *top)
 	idx = 1;
 	while (i <= *top)
 	{
-		if (stack[idx] < stack[i])
+		if (stack[idx] > stack[i])
 			idx = i;
 		i++;
 	}
 	return (idx);
 }
 
-void	biggest_to_top(int *B, int *B_top)
+void	smallest_to_top(int *a, int *a_top)
 {
 	int	idx;
 
-	idx = find_biggest(B, B_top);
-	if (idx == *B_top)
+	idx = find_smallest(a, a_top);
+	if (idx == *a_top)
 		return ;
-	if (idx < (*B_top) / 2)
+	if (idx < (*a_top) / 2)
 	{
 		while (idx >= 0)
 		{
-			rrb(B, *B_top);
+			rra(a, *a_top);
 			idx--;
 		}
 	}
 	else
 	{	
-		while (idx < *B_top)
+		while (idx < *a_top)
 		{
-			rb(B, *B_top);
+			ra(a, *a_top);
 			idx++;
 		}
 	}
 }
 
-void	sort_copy(int *C, int top)
+void	get_keynbr(int *c, int a_top, int *ret)
 {
-	int	x;
-	int	tmp;
-
-	while (top > 0)
-	{
-		x = find_smallest(C, &top);
-		tmp = C[top];
-		C[top] = C[x];
-		C[x] = tmp;
-		top--;
-	}
-}
-
-int	*find_keynbr(int *A, int A_top)
-{
-	int *C;
 	int	i;
-	int *ret;
 
-	C = malloc(sizeof(int) * (A_top + 1));
-	ret = malloc(sizeof(int) * 4);
-	if (!C || !ret)
-		return (0);								//what then?
-	i = 0;
-	while (i <= A_top)
-	{
-		C[i] = A[i];
-		i++;
-	}
-	sort_copy(C, A_top);
 	i = 1;
-	while (i < 5)
+	if (a_top <= 100)
 	{
-		ret[i] = C[A_top - (A_top/4) * i];
-		i++;
-	}
-	free (C);
-	return (ret);
-}
-
-void	push_to_b(int *A, int *A_top, int *B, int *B_top, int j)
-{
-	if (j == *A_top)
-		pb(A, B, B_top, A_top);
-	else if (j < (*A_top) / 2)
-	{
-		while (j >= 0)
+		while (i < 5)
 		{
-			rra(A, *A_top);
-			j--;
+			ret[i] = c[a_top - (a_top / 4) * i];
+			i++;
 		}
-		pb(A, B, B_top, A_top);
 	}
 	else
 	{
-		while (j < *A_top)
+		while (i < 9)
 		{
-			ra(A, *A_top);
-			j++;
+			ret[i] = c[a_top - (a_top / 8) * i];
+			i++;
 		}
-		pb(A, B, B_top, A_top);
 	}
 }
 
-void	push_to_a(int *A, int *A_top, int *B, int *B_top)
+int	*find_keynbr(int *a, int a_top)
 {
-	int	count;
-
-	if (!isSorted(A, *A_top))
-	{
-		if (*A_top > 2)
-			ten_sort(A, A_top, B, B_top);
-		else
-			three_sort(A, *A_top);
-	}
-	count = *B_top + 1;
-	while (count > 0)
-	{
-		biggest_to_top(B, B_top);
-		pa(A, B, B_top, A_top);
-		count--;
-	}
-}
-
-void	dozen_sort(int *A, int *B, int *A_top, int *B_top)
-{
-	int *key_nbr;
+	int	*c;
 	int	i;
-	int	j;
-	int	k;
-	
-	key_nbr = find_keynbr(A, *A_top);
-	k = 1;
-	while (k < 5)
+	int	*ret;
+
+	c = malloc(sizeof(int) * (a_top + 1));
+	if (a_top <= 100)
+		ret = malloc(sizeof(int) * 4);
+	else
+		ret = malloc(sizeof(int) * 8);
+	if (!c || !ret)
+		return (0);
+	i = 0;
+	while (i <= a_top)
 	{
-		i = *A_top;
-		while (i >= 0)
-		{
-			j = i; 
-			if (A[j] <= key_nbr[k])
-			{
-				push_to_b(A, A_top, B, B_top,j);	
-				i = (*A_top) + 1;
-			}
-			i--;
-		}
-		k++;
+		c[i] = a[i];
+		i++;
 	}
-	free(key_nbr);
-	push_to_a(A, A_top, B, B_top);
+	sort_copy(c, a_top);
+	get_keynbr(c, a_top, ret);
+	free (c);
+	return (ret);
 }
