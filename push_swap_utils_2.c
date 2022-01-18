@@ -5,117 +5,98 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/16 20:09:52 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/17 17:49:44 by ilahyani         ###   ########.fr       */
+/*   Created: 2022/01/16 20:09:58 by ilahyani          #+#    #+#             */
+/*   Updated: 2022/01/18 13:44:27 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	three_sort(int *a, int a_top)
+int	find_smallest(int *stack, int top)
 {
-	if (a_top == 1 && a[1] > a[0])
-		sa(a, a_top);
-	else if (a[0] >= a[1] && a[0] >= a[2])
-		sa(a, a_top);
-	else if (a[1] >= a[0] && a[1] >= a[2])
-	{
-		if (a[0] <= a[2])
-			rra(a, a_top);
-		else
-		{
-			rra(a, a_top);
-			sa(a, a_top);
-		}
-	}
-	else if (a[2] >= a[0] && a[2] >= a[1])
-	{
-		if (a[1] >= a[0])
-		{
-			sa(a, a_top);
-			rra(a, a_top);
-		}
-		else
-			ra(a, a_top);
-	}
-}	
-
-void	ten_sort(int *a, int *a_top, int *b, int *b_top)
-{
-	int	count;
 	int	i;
+	int	idx;
 
-	count = *a_top + 1;
-	i = count;
-	while (count > 3)
+	i = 0;
+	idx = 1;
+	while (i <= top)
 	{
-		if (is_sorted(a, *a_top))
-			break ;
-		smallest_to_top(a, a_top);
-		pb(a, b, b_top, a_top);
-		count--;
+		if (stack[idx] > stack[i])
+			idx = i;
+		i++;
 	}
-	if (!is_sorted(a, *a_top))
-		three_sort(a, *a_top);
-	while (count < i)
+	return (idx);
+}
+
+void	smallest_to_top(t_stack *stacks, int *a_top)
+{
+	int	idx;
+
+	idx = find_smallest(stacks->a, *a_top);
+	if (idx == *a_top)
+		return ;
+	if (idx < (*a_top) / 2)
 	{
-		pa(a, b, b_top, a_top);
-		count++;
+		while (idx >= 0)
+		{
+			rra(stacks, *a_top);
+			idx--;
+		}
+	}
+	else
+	{	
+		while (idx < *a_top)
+		{
+			ra(stacks, *a_top);
+			idx++;
+		}
 	}
 }
 
-void	dozen_sort(int *a, int *b, int *a_top, int *b_top)
+void	get_keynbr(int *stack, int top, int *ret)
 {
-	int	*key_nbr;
 	int	i;
-	int	j;
-	int	k;
 
-	key_nbr = find_keynbr(a, *a_top);
-	k = 1;
-	while (k < 5)
+	i = 1;
+	if (top <= 100)
 	{
-		i = *a_top;
-		while (i >= 0)
+		while (i < 5)
 		{
-			j = i;
-			if (a[j] <= key_nbr[k])
-			{
-				push_to_b(a, a_top, b, b_top, j);
-				i = (*a_top) + 1;
-			}
-			i--;
+			ret[i] = stack[top - (top / 4) * i];
+			i++;
 		}
-		k++;
 	}
-	free(key_nbr);
-	push_to_a(a, a_top, b, b_top);
+	else
+	{
+		while (i < 9)
+		{
+			ret[i] = stack[top - (top / 8) * i];
+			i++;
+		}
+	}
 }
 
-void	hundred_sort(int *a, int *b, int *a_top, int *b_top)
+int	*find_keynbr(int *stack, int top)
 {
-	int	*key_nbr;
+	int	*c;
 	int	i;
-	int	j;
-	int	k;
+	int	*ret;
 
-	key_nbr = find_keynbr(a, *a_top);
-	k = 1;
-	while (k < 9)
+	c = malloc(sizeof(int) * (top + 1));
+	if (top <= 100)
+		ret = malloc(sizeof(int) * 4);
+	else
+		ret = malloc(sizeof(int) * 8);
+	if (!c || !ret)
+		return (0);
+	i = 0;
+	while (i <= top)
 	{
-		i = *a_top;
-		while (i >= 0)
-		{
-			j = i;
-			if (a[j] <= key_nbr[k])
-			{
-				push_to_b(a, a_top, b, b_top, j);
-				i = (*a_top) + 1;
-			}
-			i--;
-		}
-		k++;
+		c[i] = stack[i];
+		i++;
 	}
-	free(key_nbr);
-	push_to_a(a, a_top, b, b_top);
+	sort_copy(c, top);
+	get_keynbr(c, top, ret);
+	free (c);
+	return (ret);
 }

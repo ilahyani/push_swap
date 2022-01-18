@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/16 20:09:58 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/17 17:30:49 by ilahyani         ###   ########.fr       */
+/*   Created: 2022/01/17 16:20:45 by ilahyani          #+#    #+#             */
+/*   Updated: 2022/01/18 13:44:31 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	find_smallest(int *stack, int *top)
+int	find_biggest(int *stack, int *top)
 {
 	int	i;
 	int	idx;
@@ -21,82 +21,93 @@ int	find_smallest(int *stack, int *top)
 	idx = 1;
 	while (i <= *top)
 	{
-		if (stack[idx] > stack[i])
+		if (stack[idx] < stack[i])
 			idx = i;
 		i++;
 	}
 	return (idx);
 }
 
-void	smallest_to_top(int *a, int *a_top)
+void	biggest_to_top(t_stack *stacks, int *b_top)
 {
 	int	idx;
 
-	idx = find_smallest(a, a_top);
-	if (idx == *a_top)
+	idx = find_biggest(stacks->b, b_top);
+	if (idx == *b_top)
 		return ;
-	if (idx < (*a_top) / 2)
+	if (idx < (*b_top) / 2)
 	{
 		while (idx >= 0)
 		{
-			rra(a, *a_top);
+			rrb(stacks, *b_top);
 			idx--;
 		}
 	}
 	else
 	{	
-		while (idx < *a_top)
+		while (idx < *b_top)
 		{
-			ra(a, *a_top);
+			rb(stacks, *b_top);
 			idx++;
 		}
 	}
 }
 
-void	get_keynbr(int *c, int a_top, int *ret)
+void	sort_copy(int *stack, int top)
 {
-	int	i;
+	int	x;
+	int	tmp;
 
-	i = 1;
-	if (a_top <= 100)
+	while (top > 0)
 	{
-		while (i < 5)
-		{
-			ret[i] = c[a_top - (a_top / 4) * i];
-			i++;
-		}
-	}
-	else
-	{
-		while (i < 9)
-		{
-			ret[i] = c[a_top - (a_top / 8) * i];
-			i++;
-		}
+		x = find_smallest(stack, top);
+		tmp = stack[top];
+		stack[top] = stack[x];
+		stack[x] = tmp;
+		top--;
 	}
 }
 
-int	*find_keynbr(int *a, int a_top)
+void	push_to_b(t_stack *stacks, int *a_top, int *b_top, int j)
 {
-	int	*c;
-	int	i;
-	int	*ret;
-
-	c = malloc(sizeof(int) * (a_top + 1));
-	if (a_top <= 100)
-		ret = malloc(sizeof(int) * 4);
-	else
-		ret = malloc(sizeof(int) * 8);
-	if (!c || !ret)
-		return (0);
-	i = 0;
-	while (i <= a_top)
+	if (j == *a_top)
+		pb(stacks, a_top, b_top);
+	else if (j < (*a_top) / 2)
 	{
-		c[i] = a[i];
-		i++;
+		while (j >= 0)
+		{
+			rra(stacks, *a_top);
+			j--;
+		}
+		pb(stacks, a_top, b_top);
 	}
-	sort_copy(c, a_top);
-	get_keynbr(c, a_top, ret);
-	free (c);
-	return (ret);
+	else
+	{
+		while (j < *a_top)
+		{
+			ra(stacks, *a_top);
+			j++;
+		}
+		pb(stacks, a_top, b_top);
+	}
+}
+
+void	push_to_a(t_stack *stacks, int *a_top, int *b_top)
+{
+	int	count;
+
+	if (!is_sorted(stacks, *a_top))
+	{
+		if (*a_top > 2)
+			ten_sort(stacks, a_top, b_top);
+		else
+			three_sort(stacks, a_top);
+	}
+	count = *b_top + 1;
+	while (count > 0)
+	{
+		biggest_to_top(stacks, b_top);
+		pa(stacks, a_top, b_top);
+		count--;
+	}
 }
