@@ -6,7 +6,7 @@
 #    By: ilahyani <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/18 19:14:43 by ilahyani          #+#    #+#              #
-#    Updated: 2022/01/02 01:27:20 by ilahyani         ###   ########.fr        #
+#    Updated: 2022/01/19 13:30:53 by ilahyani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,8 @@ SRCS        =   ft_isalpha.c\
 				ft_putnbr_fd.c\
 				ft_printf/ft_printf.c\
 				ft_printf/ft_printf_utils.c\
+				get_next_line/get_next_line.c\
+				get_next_line/get_next_line_utils.c\
 				ft_lstnew.c\
 				ft_lstadd_front.c\
 				ft_lstsize.c\

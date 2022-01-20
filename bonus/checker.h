@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   checker.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/16 20:09:31 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 01:06:02 by ilahyani         ###   ########.fr       */
+/*   Created: 2022/01/19 15:13:59 by ilahyani          #+#    #+#             */
+/*   Updated: 2022/01/19 18:53:44 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef CHECKER_H
+# define CHECKER_H
 
-# include "libft/libft.h"
-
-typedef struct s_stack
-{
-	int	*a;
-	int	*b;
-}	t_stack;
+# include"../push_swap.h"
 
 void	sa(t_stack *stacks, int *a_top);
 void	sb(t_stack *stacks, int *b_top);
@@ -32,22 +26,13 @@ void	rr(t_stack *stacks, int a_top, int b_top);
 void	rra(t_stack *stacks, int a_top);
 void	rrb(t_stack *stacks, int b_top);
 void	rrr(t_stack *stacks, int a_top, int b_top);
-int		error_catch(t_stack *stacks, long long num, int ref);
-void	sort_a(t_stack *stacks, int *a_top, int *b_top);
 int		is_sorted(t_stack *stacks, int a_top);
+int		ft_strcmp(const char *s1, const char *s2);
+void	make_moves(t_stack *stacks, t_list *moves, int *a_top, int *b_top);
 int		isdup(int *a, int num, int ref);
-void	three_sort(t_stack *stacks, int *a_top);
-void	dozen_sort(t_stack *stacks, int *a_top, int *b_top);
-void	hundred_sort(t_stack *stacks, int *a_top, int *b_top);
-int		find_smallest(int *stack, int top);
-void	smallest_to_top(t_stack *stacks, int *a_top);
-void	ten_sort(t_stack *stacks, int *a_top, int *b_top);
-int		find_biggest(int *stack, int *top);
-void	biggest_to_top(t_stack *stacks, int *b_top);
-int		*find_keynbr(int *stack, int top);
-void	get_keynbr(int *stack, int top, int *ret);
-void	sort_copy(int *stack, int top);
-void	push_to_b(t_stack *stacks, int *a_top, int *b_top, int j);
-void	push_to_a(t_stack *stacks, int *a_top, int *b_top);
+int		error_catch(t_stack *stacks, int num, int ref);
+t_list	*get_moves(void);
+void	print_res(t_stack *stacks, int *a_top, int *b_top);
+void	ft_exec(t_stack *stacks, void *move, int *a_top, int *b_top);
 
 #endif

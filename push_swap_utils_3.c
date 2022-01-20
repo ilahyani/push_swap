@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:20:45 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/18 13:44:31 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/19 12:23:24 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	biggest_to_top(t_stack *stacks, int *b_top)
 	idx = find_biggest(stacks->b, b_top);
 	if (idx == *b_top)
 		return ;
-	if (idx < (*b_top) / 2)
+	if (idx == *b_top - 1)
+		sb(stacks, b_top);
+	else if (idx < (*b_top) / 2)
 	{
 		while (idx >= 0)
 		{
