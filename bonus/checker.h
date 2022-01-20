@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:13:59 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 01:27:33 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/20 12:15:39 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		isdup(int *a, int num, int ref);
 int		error_catch(t_stack *stacks, long long num, int ref);
 int		get_moves(t_stack *stacks, int *a_top, int *b_top);
 void	print_res(t_stack *stacks, int *a_top, int *b_top);
+int		check_actions(t_stack *stacks, char *move, int *a_top, int *b_top);
 int		ft_exec(t_stack *stacks, char *move, int *a_top, int *b_top);
 
 #endif

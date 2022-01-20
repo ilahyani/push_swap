@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:40:31 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 01:26:17 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/20 12:16:11 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-void	free_list(void *node)
-{
-	if (!node)
-		return ;
-	free(node);
-}
-
-int	ft_exec(t_stack *stacks, char *move, int *a_top, int *b_top)
+int	check_actions(t_stack *stacks, char *move, int *a_top, int *b_top)
 {
 	if (ft_strcmp(move, "sa") == 10)
 		sa(stacks, a_top);
@@ -54,9 +47,31 @@ int	ft_exec(t_stack *stacks, char *move, int *a_top, int *b_top)
 	else if (ft_strcmp(move, "rrr") == 10)
 		rrr(stacks, *a_top, *b_top);
 	else
+		return (0);
+	return (1);
+}
+
+int	ft_exec(t_stack *stacks, char *move, int *a_top, int *b_top)
+{
+	if (!check_actions(stacks, move, a_top, b_top))
 	{
 		write(2, "Error\n", 6);
 		return (0);
+	}
+	return (1);
+}
+
+int	get_moves(t_stack *stacks, int *a_top, int *b_top)
+{
+	char	*move;
+
+	while (1)
+	{
+		move = get_next_line(1);
+		if (!move)
+			break ;
+		if (!ft_exec(stacks, move, a_top, b_top))
+			return (0);
 	}
 	return (1);
 }

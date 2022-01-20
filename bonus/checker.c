@@ -6,44 +6,19 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:12:01 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 01:27:27 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/20 12:16:34 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-int	get_moves(t_stack *stacks, int *a_top, int *b_top)
-{
-	char	*move;
-
-	while (1)
-	{
-		move = get_next_line(1);
-		if (!move) // invalid move should give an error, execute while reading
-			break ;
-		if (!ft_exec(stacks, move, a_top, b_top))
-			return (0);
-	}
-	return (1);
-}
-
-void	print_res(t_stack *stacks, int *a_top, int *b_top)
-{
-	if (is_sorted(stacks, *a_top) && *b_top == -1)
-		ft_printf("OK\n");
-	else
-		ft_printf("KO\n");
-	free(stacks->a);
-	free(stacks->b);
-}
-
 int	main(int argc, char **argv)
 {
-	t_stack	stacks;
-	int		i;
+	t_stack		stacks;
 	long long	num;
-	int		a_top;
-	int		b_top;
+	int			i;
+	int			a_top;
+	int			b_top;
 
 	if (argc < 2)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:11:48 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 01:21:10 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/20 12:16:29 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,14 @@ int	error_catch(t_stack *stacks, long long num, int ref)
 		return (1);
 	}
 	return (0);
+}
+
+void	print_res(t_stack *stacks, int *a_top, int *b_top)
+{
+	if (is_sorted(stacks, *a_top) && *b_top == -1)
+		ft_printf("OK\n");
+	else
+		ft_printf("KO\n");
+	free(stacks->a);
+	free(stacks->b);
 }
