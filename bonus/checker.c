@@ -6,26 +6,25 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:12:01 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/19 20:47:55 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/20 01:27:27 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-t_list	*get_moves(void)
+int	get_moves(t_stack *stacks, int *a_top, int *b_top)
 {
-	t_list	*m;
-	char	*s;
+	char	*move;
 
-	m = NULL;
 	while (1)
 	{
-		s = get_next_line(1);
-		if (!s) // invalid move should give an error, execute while reading
+		move = get_next_line(1);
+		if (!move) // invalid move should give an error, execute while reading
 			break ;
-		ft_lstadd_back(&m, ft_lstnew(s));
+		if (!ft_exec(stacks, move, a_top, b_top))
+			return (0);
 	}
-	return (m);
+	return (1);
 }
 
 void	print_res(t_stack *stacks, int *a_top, int *b_top)
@@ -42,7 +41,7 @@ int	main(int argc, char **argv)
 {
 	t_stack	stacks;
 	int		i;
-	int		num;
+	long long	num;
 	int		a_top;
 	int		b_top;
 
@@ -61,7 +60,8 @@ int	main(int argc, char **argv)
 			return (0);
 		stacks.a[i++] = num;
 	}
-	make_moves(&stacks, get_moves(), &a_top, &b_top);
+	if (!get_moves(&stacks, &a_top, &b_top))
+		return (0);
 	print_res(&stacks, &a_top, &b_top);
 	return (0);
 }

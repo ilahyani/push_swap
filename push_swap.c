@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 21:03:02 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 01:05:47 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/20 01:11:33 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	fill_stack(int argc, char **argv, t_stack *stacks, int *a_top)
 
 	i = 0;
 	if (argc == 2)
-	{
+	{ // this is it's own function
 		args = ft_split(argv[1], ' ');
 		while (args[i])
 			i++;
@@ -86,7 +86,7 @@ int	fill_stack(int argc, char **argv, t_stack *stacks, int *a_top)
 		}
 	}
 	else
-	{
+	{ // // this is it's own function
 		*a_top = argc - 2;	
 		stacks->a = (int *) malloc (sizeof(int) * (argc - 1));
 		stacks->b = (int *) malloc (sizeof(int) * (argc - 1));
@@ -122,3 +122,4 @@ int	main(int argc, char **argv)
 	free(stacks.b);
 	return (0);
 }
+//maybe do like imabid, he had better file structure and organization

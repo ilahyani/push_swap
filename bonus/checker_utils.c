@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:11:48 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/19 18:40:10 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/20 01:21:10 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	isdup(int *a, int num, int ref)
 	return (0);
 }
 
-int	error_catch(t_stack *stacks, int num, int ref)
+int	error_catch(t_stack *stacks, long long num, int ref)
 {
 	if (num == -1 || !isdup(stacks->a, num, ref) || num > 2147483647)
 	{

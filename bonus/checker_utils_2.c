@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:40:31 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/19 18:40:48 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/20 01:26:17 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_list(void *node)
 	free(node);
 }
 
-void	ft_exec(t_stack *stacks, void *move, int *a_top, int *b_top)
+int	ft_exec(t_stack *stacks, char *move, int *a_top, int *b_top)
 {
 	if (ft_strcmp(move, "sa") == 10)
 		sa(stacks, a_top);
@@ -54,15 +54,9 @@ void	ft_exec(t_stack *stacks, void *move, int *a_top, int *b_top)
 	else if (ft_strcmp(move, "rrr") == 10)
 		rrr(stacks, *a_top, *b_top);
 	else
-		write(2, "Error\n", 6);
-}
-
-void	make_moves(t_stack *stacks, t_list *moves, int *a_top, int *b_top)
-{
-	while (moves)
 	{
-		ft_exec(stacks, moves->content, a_top, b_top);
-		moves = moves->next;
+		write(2, "Error\n", 6);
+		return (0);
 	}
-	ft_lstclear(&moves, &free_list);
+	return (1);
 }
