@@ -6,14 +6,18 @@
 #    By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 11:47:17 by ilahyani          #+#    #+#              #
-#    Updated: 2022/01/19 18:41:13 by ilahyani         ###   ########.fr        #
+#    Updated: 2022/01/20 12:05:17 by ilahyani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	push_swap.c\
-		push_swap_utils_1.c\
-		push_swap_utils_2.c\
-		push_swap_utils_3.c\
+		dozen_hundred_sort_utils_1.c\
+		dozen_hundred_sort_utils_2.c\
+		dozen_sort.c\
+		hundred_sort.c\
+		ten_sort.c\
+		get_args.c\
+		sort_args.c\
 		push_swap_moves_1.c\
 		push_swap_moves_2.c\
 		push_swap_moves_3.c

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils_3.c                                :+:      :+:    :+:   */
+/*   dozen_hunder_sort_utils_2.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/17 16:20:45 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/19 12:23:24 by ilahyani         ###   ########.fr       */
+/*   Created: 2022/01/20 11:56:06 by ilahyani          #+#    #+#             */
+/*   Updated: 2022/01/20 11:56:27 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,6 @@ void	biggest_to_top(t_stack *stacks, int *b_top)
 			rb(stacks, *b_top);
 			idx++;
 		}
-	}
-}
-
-void	sort_copy(int *stack, int top)
-{
-	int	x;
-	int	tmp;
-
-	while (top > 0)
-	{
-		x = find_smallest(stack, top);
-		tmp = stack[top];
-		stack[top] = stack[x];
-		stack[x] = tmp;
-		top--;
 	}
 }
 

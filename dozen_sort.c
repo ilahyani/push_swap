@@ -1,31 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   dozen_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/01 21:03:02 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 11:46:05 by ilahyani         ###   ########.fr       */
+/*   Created: 2022/01/20 11:56:54 by ilahyani          #+#    #+#             */
+/*   Updated: 2022/01/20 12:06:23 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+void	dozen_sort(t_stack *stacks, int *a_top, int *b_top)
 {
-	t_stack	stacks;
-	int		a_top;
-	int		b_top;
+	int	*key_nbr;
+	int	i;
+	int	j;
+	int	k;
 
-	if (argc == 1)
-		return (0);
-	a_top = 0;
-	b_top = -1;
-	if (!fill_stack(argc, argv, &stacks, &a_top))
-		return (0);
-	if (!is_sorted(&stacks, a_top))
-		sort_a(&stacks, &a_top, &b_top);
-	free(stacks.b);
-	return (0);
+	key_nbr = find_keynbr(stacks->a, *a_top);
+	k = 1;
+	while (k < 5)
+	{
+		i = *a_top;
+		while (i >= 0)
+		{
+			j = i;
+			if (stacks->a[j] <= key_nbr[k])
+			{
+				push_to_b(stacks, a_top, b_top, j);
+				i = (*a_top) + 1;
+			}
+			i--;
+		}
+		k++;
+	}
+	free(key_nbr);
+	push_to_a(stacks, a_top, b_top);
 }

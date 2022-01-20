@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils_2.c                                :+:      :+:    :+:   */
+/*   ten_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/16 20:09:58 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/18 13:44:27 by ilahyani         ###   ########.fr       */
+/*   Created: 2022/01/20 12:00:47 by ilahyani          #+#    #+#             */
+/*   Updated: 2022/01/20 12:01:15 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,50 +53,26 @@ void	smallest_to_top(t_stack *stacks, int *a_top)
 	}
 }
 
-void	get_keynbr(int *stack, int top, int *ret)
+void	ten_sort(t_stack *stacks, int *a_top, int *b_top)
 {
+	int	count;
 	int	i;
 
-	i = 1;
-	if (top <= 100)
+	count = *a_top + 1;
+	i = count;
+	while (count > 3)
 	{
-		while (i < 5)
-		{
-			ret[i] = stack[top - (top / 4) * i];
-			i++;
-		}
+		if (is_sorted(stacks, *a_top))
+			break ;
+		smallest_to_top(stacks, a_top);
+		pb(stacks, a_top, b_top);
+		count--;
 	}
-	else
+	if (!is_sorted(stacks, *a_top))
+		three_sort(stacks, a_top);
+	while (count < i)
 	{
-		while (i < 9)
-		{
-			ret[i] = stack[top - (top / 8) * i];
-			i++;
-		}
+		pa(stacks, a_top, b_top);
+		count++;
 	}
-}
-
-int	*find_keynbr(int *stack, int top)
-{
-	int	*c;
-	int	i;
-	int	*ret;
-
-	c = malloc(sizeof(int) * (top + 1));
-	if (top <= 100)
-		ret = malloc(sizeof(int) * 4);
-	else
-		ret = malloc(sizeof(int) * 8);
-	if (!c || !ret)
-		return (0);
-	i = 0;
-	while (i <= top)
-	{
-		c[i] = stack[i];
-		i++;
-	}
-	sort_copy(c, top);
-	get_keynbr(c, top, ret);
-	free (c);
-	return (ret);
 }

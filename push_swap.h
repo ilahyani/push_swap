@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 20:09:31 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 01:06:02 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/20 11:39:03 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ void	rr(t_stack *stacks, int a_top, int b_top);
 void	rra(t_stack *stacks, int a_top);
 void	rrb(t_stack *stacks, int b_top);
 void	rrr(t_stack *stacks, int a_top, int b_top);
+int		single_arg(char **argv, t_stack *stacks, int *a_top);
+int		multiple_args(int argc, char **argv, t_stack *stacks, int *a_top);
+int		fill_stack(int argc, char **argv, t_stack *stacks, int *a_top);
 int		error_catch(t_stack *stacks, long long num, int ref);
 void	sort_a(t_stack *stacks, int *a_top, int *b_top);
 int		is_sorted(t_stack *stacks, int a_top);
