@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:11:48 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 12:16:29 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/20 12:24:35 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,23 @@ int	is_sorted(t_stack *stacks, int a_top)
 	return (0);
 }
 
-int	isdup(int *a, int num, int ref)
+int	isdup(int *a, int num, int idx)
 {
 	int	i;
 
-	if (ref == 0)
+	if (idx == 0)
 		return (1);
 	i = 0;
-	while (a[i] != num && i < ref)
+	while (a[i] != num && i < idx)
 		i++;
-	if (i == ref)
+	if (i == idx)
 		return (1);
 	return (0);
 }
 
-int	error_catch(t_stack *stacks, long long num, int ref)
+int	error_catch(t_stack *stacks, long long num, int idx)
 {
-	if (num == -1 || !isdup(stacks->a, num, ref) || num > 2147483647)
+	if (num == -1 || !isdup(stacks->a, num, idx) || num > 2147483647)
 	{
 		write(2, "Error\n", 6);
 		free(stacks->a);
