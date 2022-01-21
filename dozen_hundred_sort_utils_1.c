@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dozen_hunder_sort_utils_1.c                        :+:      :+:    :+:   */
+/*   dozen_hundred_sort_utils_1.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 11:54:25 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 11:55:53 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/21 02:31:05 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,15 @@ void	sort_copy(int *stack, int top)
 void	get_keynbr(int *stack, int top, int *ret)
 {
 	int	i;
+	int	j;
 
+	j = 0;
 	i = 1;
 	if (top <= 100)
 	{
 		while (i < 5)
 		{
-			ret[i] = stack[top - (top / 4) * i];
-			i++;
+			ret[j++] = stack[top - (top / 4) * i++];
 		}
 	}
 	else

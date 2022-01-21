@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 11:56:54 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 12:06:23 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/21 02:31:31 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	dozen_sort(t_stack *stacks, int *a_top, int *b_top)
 	int	k;
 
 	key_nbr = find_keynbr(stacks->a, *a_top);
-	k = 1;
-	while (k < 5)
+	k = 0;
+	while (k < 4)
 	{
 		i = *a_top;
 		while (i >= 0)
