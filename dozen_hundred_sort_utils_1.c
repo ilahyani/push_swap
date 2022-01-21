@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 11:54:25 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/21 02:31:05 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/21 05:59:00 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,12 @@ void	get_keynbr(int *stack, int top, int *ret)
 	if (top <= 100)
 	{
 		while (i < 5)
-		{
 			ret[j++] = stack[top - (top / 4) * i++];
-		}
 	}
 	else
 	{
 		while (i < 9)
-		{
-			ret[i] = stack[top - (top / 8) * i];
-			i++;
-		}
+			ret[j++] = stack[top - (top / 8) * i++];
 	}
 }
 

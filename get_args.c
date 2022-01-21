@@ -6,13 +6,13 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 11:58:24 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/21 05:26:13 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/21 05:43:41 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	isdup(t_stack *stacks, int num, int ref)
+int	isdup(t_stack *stacks, long long num, int ref)
 {
 	int	i;
 
@@ -49,7 +49,6 @@ int	get_args(int argc, char **argv, t_stack *stacks, int *a_top)
 	stacks->b = ft_calloc (sizeof(int), (argc - 1));
 	argc--;
 	i = 0;
-	num = 0;
 	while (i <= *a_top)
 	{
 		num = ft_atoi(argv[argc--]);

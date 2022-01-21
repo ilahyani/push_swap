@@ -6,11 +6,10 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:11:48 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 16:47:08 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/21 06:04:39 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
 #include "checker.h"
 
 int	is_sorted(t_stack *stacks, int a_top)
@@ -22,23 +21,23 @@ int	is_sorted(t_stack *stacks, int a_top)
 	return (0);
 }
 
-int	isdup(int *a, int num, int idx)
+int	isdup(t_stack *stacks, long long num, int ref)
 {
 	int	i;
 
-	if (idx == 0)
-		return (1);
 	i = 0;
-	while (a[i] != num && i < idx)
+	if (ref == 0)
+		return (1);
+	while (stacks->a[i] != num && i < ref)
 		i++;
-	if (i == idx)
+	if (i == ref)
 		return (1);
 	return (0);
 }
 
 int	error_catch(t_stack *stacks, long long num, int idx)
 {
-	if (num == -1 || !isdup(stacks->a, num, idx)
+	if (num == -1 || !isdup(stacks, num, idx)
 		|| num > 2147483647 || num < -2147483648)
 	{
 		write(2, "Error\n", 6);
@@ -55,6 +54,6 @@ void	print_res(t_stack *stacks, int *a_top, int *b_top)
 		ft_printf("OK\n");
 	else
 		ft_printf("KO\n");
-	//free(stacks->a);
+	free(stacks->a);
 	free(stacks->b);
 }

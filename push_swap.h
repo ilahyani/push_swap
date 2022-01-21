@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 20:09:31 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/21 05:22:43 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/21 05:43:49 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_args(char **args);
 int		error_catch(t_stack *stacks, long long num, int ref);
 void	sort_a(t_stack *stacks, int *a_top, int *b_top);
 int		is_sorted(t_stack *stacks, int a_top);
-int		isdup(t_stack *stacks, int num, int ref);
+int		isdup(t_stack *stacks, long long num, int ref);
 void	three_sort(t_stack *stacks, int *a_top);
 void	dozen_sort(t_stack *stacks, int *a_top, int *b_top);
 void	hundred_sort(t_stack *stacks, int *a_top, int *b_top);

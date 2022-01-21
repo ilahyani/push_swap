@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 11:57:23 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 12:07:22 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/21 05:57:13 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	hundred_sort(t_stack *stacks, int *a_top, int *b_top)
 	int	k;
 
 	key_nbr = find_keynbr(stacks->a, *a_top);
-	k = 1;
-	while (k < 9)
+	k = 0;
+	while (k < 8)
 	{
 		i = *a_top;
 		while (i >= 0)

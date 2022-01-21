@@ -6,7 +6,7 @@
 /*   By: ilahyani <ilahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 15:13:59 by ilahyani          #+#    #+#             */
-/*   Updated: 2022/01/20 12:15:39 by ilahyani         ###   ########.fr       */
+/*   Updated: 2022/01/21 06:03:44 by ilahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	rrb(t_stack *stacks, int b_top);
 void	rrr(t_stack *stacks, int a_top, int b_top);
 int		is_sorted(t_stack *stacks, int a_top);
 int		ft_strcmp(const char *s1, const char *s2);
-int		isdup(int *a, int num, int ref);
+int		isdup(t_stack *stacks, long long num, int ref);
 int		error_catch(t_stack *stacks, long long num, int ref);
 int		get_moves(t_stack *stacks, int *a_top, int *b_top);
 void	print_res(t_stack *stacks, int *a_top, int *b_top);
