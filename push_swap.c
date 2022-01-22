@@ -20,8 +20,6 @@ int	main(int argc, char **argv)
 
 	a_top = 0;
 	b_top = -1;
-	stacks.a = 0;
-	stacks.b = 0;
 	if (argc == 1)
 		return (0);
 	if (!get_args(argc, argv, &stacks, &a_top))
