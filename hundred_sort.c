@@ -16,7 +16,6 @@ void	hundred_sort(t_stack *stacks, int *a_top, int *b_top)
 {
 	int	*key_nbr;
 	int	i;
-	int	j;
 	int	k;
 
 	key_nbr = find_keynbr(stacks->a, *a_top);
@@ -26,10 +25,9 @@ void	hundred_sort(t_stack *stacks, int *a_top, int *b_top)
 		i = *a_top;
 		while (i >= 0)
 		{
-			j = i;
-			if (stacks->a[j] <= key_nbr[k])
+			if (stacks->a[i] <= key_nbr[k])
 			{
-				push_to_b(stacks, a_top, b_top, j);
+				push_to_b(stacks, a_top, b_top, i);
 				i = (*a_top) + 1;
 			}
 			i--;
